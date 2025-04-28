@@ -8,7 +8,9 @@ package com.inventory.test;
  *
  * @author Achintha
  */
+import com.inventory.helpers.Product;
 import com.inventory.models.ProductModel;
+import java.util.ArrayList;
 
 public class TestProductModel {
     public static void main(String[] args) {
@@ -25,15 +27,22 @@ public class TestProductModel {
 //        boolean isDeleted = ProductModel.deleteProduct(productKey);
 //        
 //        System.out.println((isDeleted? "Successfull!" : "Unsuccessfull!"));
-        
-//        boolean isFound = ProductModel.findProduct(productKey);
-//        System.out.println((isFound? "Successfull" : "Unsuccessfull"));
 
-        boolean isUpdated = ProductModel.editProduct(productKey, productName, category, quantity, price);
-        
-        System.out.println((isUpdated? "Successfull!" : "Unsuccessfull!"));
+//        Product product = ProductModel.findProduct(productKey);
+//        System.out.println((product != null ? "Found" : "Not Found"));
+
+//        boolean isUpdated = ProductModel.editProduct(productKey, productName, category, quantity, price);
+//        
+//        System.out.println((isUpdated? "Successfull!" : "Unsuccessfull!"));
        
+        ArrayList<Product> products = ProductModel.findLowStocks("10");
         
-        
+        if(products != null){
+        for(Product product: products){
+            System.out.println(product.getProductKey() + " " + product.getProductName() + " " + product.getQuantity());
+        }
+        }else{
+            System.out.println("No Empty Stocks");
+        }
     }
 }

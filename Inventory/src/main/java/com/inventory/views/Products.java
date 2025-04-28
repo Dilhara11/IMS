@@ -4,6 +4,10 @@
  */
 package com.inventory.views;
 
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Achintha
@@ -38,15 +42,17 @@ public class Products extends javax.swing.JFrame {
         priceLabel = new javax.swing.JLabel();
         priceField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        productTable = new javax.swing.JTable();
         headingLabel = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
         findButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         keyLabel.setText("Key:");
 
@@ -58,35 +64,44 @@ public class Products extends javax.swing.JFrame {
 
         priceLabel.setText("Price:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        productTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Key", "Name", "Category", "Quantity", "Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane1.setViewportView(jTable1);
+        productTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(productTable);
 
         headingLabel.setText("Products");
 
+        addButton.setBackground(new java.awt.Color(255, 204, 204));
         addButton.setText("Add");
 
+        findButton.setBackground(new java.awt.Color(204, 204, 255));
         findButton.setText("Find");
 
+        updateButton.setBackground(new java.awt.Color(255, 204, 255));
         updateButton.setText("Update");
 
+        deleteButton.setBackground(new java.awt.Color(255, 122, 107));
         deleteButton.setText("Delete");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -132,9 +147,9 @@ public class Products extends javax.swing.JFrame {
                                     .addComponent(quantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(quantityField, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +186,7 @@ public class Products extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(findButton, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                             .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -192,6 +207,46 @@ public class Products extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+    public JTextField getProductKeyField(){
+        return keyField;
+    }
+    
+    public JTextField getProductNameField(){
+        return nameField;
+    }
+    
+    public JTextField getCategoryField(){
+        return categoryField;
+    }
+    
+    public JTextField getQuantityField(){
+        return quantityField;
+    }
+    
+    public JTextField getPriceField(){
+        return priceField;
+    }
+    
+    public JButton getAddButton(){
+        return addButton;
+    }
+    
+    public JButton getFindButton(){
+        return findButton;
+    }
+    
+    public JTable getProductTable(){
+        return productTable;
+    }
+    
+    public JButton getDeleteButton(){
+        return deleteButton;
+    }
+    
+    public JButton getUpdateButton(){
+        return updateButton;
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -233,13 +288,13 @@ public class Products extends javax.swing.JFrame {
     private javax.swing.JLabel headingLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField keyField;
     private javax.swing.JLabel keyLabel;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField priceField;
     private javax.swing.JLabel priceLabel;
+    private javax.swing.JTable productTable;
     private javax.swing.JTextField quantityField;
     private javax.swing.JLabel quantityLabel;
     private javax.swing.JButton updateButton;

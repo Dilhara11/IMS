@@ -8,8 +8,10 @@ package com.inventory.test;
  *
  * @author Achintha
  */
+import com.inventory.helpers.OneSale;
 import com.inventory.models.SaleModel;
 import static com.inventory.models.SaleModel.rs;
+import java.util.ArrayList;
 
 public class TestSaleModel {
     public static void main(String[] args) {
@@ -18,16 +20,15 @@ public class TestSaleModel {
         String productKey = "#P001";
         String quantity  = "5";
         
-//        boolean isAdded = SaleModel.addSale(date, productKey, quantity);
-//        
-//        System.out.println((isAdded? "Successfull" : "Unsuccessfull"));
-        
-        boolean isFound = SaleModel.getSales("05");
-        
-        System.out.println((isFound? "Success" : "Failure"));
-     
+//        ArrayList<OneSale> sales = SaleModel.getMonthSales("04");
+//        ArrayList<OneSale> sales = SaleModel.getYearSales("2025");
+//        ArrayList<OneSale> sales = SaleModel.getProductSales("#P001");
+//        ArrayList<OneSale> sales = SaleModel.getYearMonthSales("2025", "04");
+        ArrayList<OneSale> sales = SaleModel.getYearMonthProductSales("#P001", "2001", "05");
         
         
-        
+        for(OneSale sale: sales){
+            System.out.println(sale.getProductKey() + " " + sale.getProductName() + " " + sale.getQuantity() + " " + sale.getDate());
+        }
     }
 }

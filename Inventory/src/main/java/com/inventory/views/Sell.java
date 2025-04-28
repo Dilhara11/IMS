@@ -4,6 +4,11 @@
  */
 package com.inventory.views;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Achintha
@@ -34,16 +39,20 @@ public class Sell extends javax.swing.JFrame {
         quantityLabel = new javax.swing.JLabel();
         quantityField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        sellTable = new javax.swing.JTable();
         headingLabel = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
         proceedButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        totalLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         keyLabel.setText("Key:");
 
@@ -51,59 +60,63 @@ public class Sell extends javax.swing.JFrame {
 
         quantityLabel.setText("Quantity:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        sellTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Key", "Name", "Quantity", "Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane1.setViewportView(jTable1);
+        sellTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sellTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(sellTable);
 
         headingLabel.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         headingLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         headingLabel.setText("Sell");
 
+        addButton.setBackground(new java.awt.Color(204, 204, 255));
         addButton.setText("Add");
 
+        updateButton.setBackground(new java.awt.Color(255, 255, 204));
         updateButton.setText("Update");
 
+        clearButton.setBackground(new java.awt.Color(255, 204, 204));
         clearButton.setText("Clear");
 
+        deleteButton.setBackground(new java.awt.Color(204, 255, 153));
         deleteButton.setText("Delete");
 
-        cancelButton.setText("Cancel");
-
+        proceedButton.setBackground(new java.awt.Color(51, 255, 204));
         proceedButton.setText("Proceed");
+
+        jLabel1.setText("Total:");
+
+        totalLabel.setText("0.0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(proceedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,6 +149,17 @@ public class Sell extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71)
+                        .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(proceedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,7 +167,7 @@ public class Sell extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(headingLabel)
                 .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(keyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,11 +188,13 @@ public class Sell extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(updateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelButton)
-                    .addComponent(proceedButton))
+                    .addComponent(jLabel1)
+                    .addComponent(totalLabel))
+                .addGap(27, 27, 27)
+                .addComponent(proceedButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -190,9 +216,49 @@ public class Sell extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sellTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sellTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sellTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
+    
+    public JTextField getKeyField(){
+        return keyField;
+    }
+    
+    public JTextField getQuantity(){
+        return quantityField;
+    }
+    
+    public JButton getAddButton(){
+        return addButton;
+    }
+    
+    public JTable getSellTable(){
+        return sellTable;
+    }
+    
+    public JLabel getTotalLabel(){
+        return totalLabel;
+    }
+    
+    public JButton getProceedButton(){
+        return proceedButton;
+    }
+    
+    public JButton getUpdateButton(){
+        return updateButton;
+    }
+    
+    public JButton getClearButton(){
+        return clearButton;
+    }
+    
+    public JButton getDeleteButton(){
+        return deleteButton;
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -227,13 +293,12 @@ public class Sell extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton cancelButton;
     private javax.swing.JButton clearButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel headingLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField keyField;
     private javax.swing.JLabel keyLabel;
     private javax.swing.JTextField nameField;
@@ -241,6 +306,8 @@ public class Sell extends javax.swing.JFrame {
     private javax.swing.JButton proceedButton;
     private javax.swing.JTextField quantityField;
     private javax.swing.JLabel quantityLabel;
+    private javax.swing.JTable sellTable;
+    private javax.swing.JLabel totalLabel;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,6 +10,7 @@ package com.inventory.models;
  */
 
 import com.inventory.config.db;
+import com.inventory.helpers.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -45,11 +46,11 @@ public class UserModel {
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-                String name = rs.getString("name");
+                String id = rs.getString("id");
                 String authPassword = rs.getString("password");
           
                 
-                if ((userName == null ? name == null : userName.equals(name)) && (password == null ? authPassword == null : password.equals(authPassword))) {
+                if ((userName == null ? id == null : userName.equals(id)) && (password == null ? authPassword == null : password.equals(authPassword))) {
                     return true;
                 }
             }
@@ -59,6 +60,29 @@ public class UserModel {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    
+    public static User getUser(String id){
+        String sql = "select id, name, type from users where id = ?";
+        
+        try {
+            Connection con = db.connect();
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                return new User(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("type")
+                );
+            }
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

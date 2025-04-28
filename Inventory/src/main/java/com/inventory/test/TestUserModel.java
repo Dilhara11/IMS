@@ -17,15 +17,15 @@ public class TestUserModel {
         String password = "1245";
         String type = "Admin";
         
-//        boolean isInsert = UserModel.insertUser(userId, name, password, type);
+        boolean isInsert = UserModel.insertUser(userId, name, password, type);
         
-//        if(isInsert){
-//            System.out.println("Successfully Inserted.");
-//        } else {
-//            System.out.println("Insertion Failed.");
-//        }
+        if(isInsert){
+            System.out.println("Successfully Inserted.");
+        } else {
+            System.out.println("Insertion Failed.");
+        }
         
-        boolean isFound = UserModel.authUser(name, password);
-        System.out.println((isFound? "Aunthenticated" : "Invalid user"));
+//        boolean isFound = UserModel.authUser(name, password);
+//        System.out.println((isFound? "Aunthenticated" : "Invalid user"));
     }
 }

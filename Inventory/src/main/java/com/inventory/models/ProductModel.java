@@ -9,10 +9,13 @@ package com.inventory.models;
  * @author Achintha
  */
 import com.inventory.config.db;
+import com.inventory.helpers.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ProductModel {
     
@@ -62,34 +65,81 @@ public class ProductModel {
     
     public static boolean deleteProduct(String key){
         String sql = "Delete from products where productKey = ?";
+        String sql1 = "Select COUNT(*) from products where productKey = ?";
         
         try {
             Connection con = db.connect();
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, key);
-            stmt.execute();
-            return true;
+            PreparedStatement checkStmt = con.prepareStatement(sql1);
+            checkStmt.setString(1, key);
+            ResultSet rs = checkStmt.executeQuery();
+            int count = 0;
+            while(rs.next()){
+                count = rs.getInt(1);
+            }
+            if(count > 0){
+                return false;
+            }else{
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setString(1, key);
+                stmt.execute();
+                return true;
+            }
+        
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
     
-    public static boolean findProduct(String key){
+    public static Product findProduct(String key){
         String sql = "Select * from products where productKey = ?";
-        
         try {
             Connection con = db.connect();
             PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs;
             
             stmt.setString(1, key);
-            ResultSet rs = stmt.executeQuery();
-            if(rs.next()) return true;
-            return false;
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                return new Product(
+                        rs.getString("productKey"), 
+                        rs.getString("productname"), 
+                        rs.getString("category"), 
+                        rs.getInt("quatity"), 
+                        rs.getFloat("price"));
+            }
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
-    } 
+    }
+
+    
+    public static ArrayList<Product> findLowStocks(String stock){
+        String sql = "Select * from products where quatity < ?";
+        try {
+            Connection con = db.connect();
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs;
+            
+            stmt.setString(1, stock);
+            rs = stmt.executeQuery();
+            ArrayList<Product> products = new ArrayList<>();
+            while(rs.next()){
+                Product product=  new Product(
+                        rs.getString("productKey"), 
+                        rs.getString("productname"), 
+                        rs.getString("category"), 
+                        rs.getInt("quatity"), 
+                        rs.getFloat("price"));
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     
 }
